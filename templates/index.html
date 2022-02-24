@@ -13,70 +13,47 @@
 
         <div class="article">
 
-            <h1>Breizibus</h1>
+            <h1><a href="/admin">Breizibus</a></h1>
 
 
-
-            {% if verif==1  %}
-
-            <P>dns la base de données il y a les tables :</P>
-            <ul>
-
-                {% for i in res1 %}
-
-                    
-                   
-                        <li>{{i[0]}}</li>
-
-
-                   
-
-
-                {% endfor %}
-
-            </ul>
-            {% endif %}
-
+            <!-- affichage des lignes de bus disponibles et les afficher dans un formulaire-->
+            <p>Sélectionnez une ligne de bus :</p>
 
             <form action="/" method="post">
-               
-                <fieldset> 
-                    <div id="mef">
-                        <div class="champs">
-                            <div class="mep" ><label for=""></label></div>
-                            <div class="mep2" ><input type=text name=""></div>
-                        </div>
-        
+            
+                <select name="lignes" >
 
-                        <input type="hidden" name="verification" value="1">    
+                    {% for i in aff %}
+                    <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
 
-                    </div>
+                    {% endfor %}
 
-
-                    <label for="pet-select">champs :</label>
-
-                        <select name="" id="">
-                            <option value="">--Please choose an option--</option>
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
-                        </select>
-
-
-
-                </fieldset> 
-
+                </select>
 
                 <button id='submit'>Valider</button>
-
             </form>
 
-               
+        
 
 
+
+
+
+        <!-- affichage des résultats -->
+
+        {% if verif==1  %}
+
+            <P>Voici les arrêts disponibles pour la ligne : {{texte}}</P>
+            
+            <ul>
+                {% for i in res1 %}
+                                   
+                        <li>{{i[0]}} : {{i[1]}}</li>           
+
+                {% endfor %}
+            </ul>
+
+        {% endif %}
 
 
         </div>
