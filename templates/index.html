@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div id=""containeur>
+
+
+        <div class="article">
+
+            <h1>Breizibus</h1>
+
+
+
+            {% if verif==1  %}
+
+            <P>dns la base de données il y a les tables :</P>
+            <ul>
+
+                {% for i in res1 %}
+
+                    
+                   
+                        <li>{{i[0]}}</li>
+
+
+                   
+
+
+                {% endfor %}
+
+            </ul>
+            {% endif %}
+
+
+            <form action="/" method="post">
+               
+                <fieldset> 
+                    <div id="mef">
+                        <div class="champs">
+                            <div class="mep" ><label for=""></label></div>
+                            <div class="mep2" ><input type=text name=""></div>
+                        </div>
+        
+
+                        <input type="hidden" name="verification" value="1">    
+
+                    </div>
+
+
+                    <label for="pet-select">champs :</label>
+
+                        <select name="" id="">
+                            <option value="">--Please choose an option--</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+
+
+
+                </fieldset> 
+
+
+                <button id='submit'>Valider</button>
+
+            </form>
+
+               
+
+
+
+
+        </div>
+        
+        
+
+    </div>
+    
+
+
+</body>
+</html>
