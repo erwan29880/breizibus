@@ -69,7 +69,7 @@ class Administration(Connexion):
 
     def voir_bus2(self):
     
-        "voir les bus"
+        "voir les bus pour suppression"
 
         self.ouvrir()
        
@@ -94,6 +94,23 @@ class Administration(Connexion):
         self.fermer()
         
 
+    def update(self, id_bus, nom_ligne, immatriculation, nombre_places ):
+
+        self.ouvrir()
+
+        id_bus = int(id_bus)
+        nombre_places = int(nombre_places)
+
+        ligne = f"SELECT lignes.id_ligne FROM lignes JOIN bus ON lignes.id_ligne=bus.id_ligne WHERE bus.id_bus={id_bus};"
+        self.cursor.execute(ligne)
+        ligness = [x for x in self.cursor][0][0]
+        # return print(ligness)
+
+        sql = f"UPDATE bus SET id_ligne={ligness}, immatriculation='{immatriculation}', nombre_place={nombre_places} WHERE id_bus={id_bus}; "
+        self.cursor.execute(sql)
+        self.conn.commit()
+
+        self.fermer()
 
 
 
@@ -103,3 +120,4 @@ if __name__ == "__main__":
 
     a.commit('gtref', 11, 'Bleu')
     # a.supprimer_bus('12')
+    # a.update(9, 'Rouge', 'gg56', 12)

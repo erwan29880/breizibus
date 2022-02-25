@@ -1,20 +1,53 @@
-from requete import Requete
+import os
 
 
-class Resultat:
+class Cookie:
 
 
     def __init__(self):
-        self.__res = Requete()
+        self.dossier = os.getcwd()
+        self.fichier = os.path.join(self.dossier, 'cook.txt')
+        self.lister_fichiers = os.listdir(self.dossier)
 
 
-
-    def formulaire(self):
+    def verifier_fichier(self):
         
-        return self.__res.requete_ligne()
+        if self.fichier in self.lister_fichiers:
+            return True
+        else:
+            return False
+        
 
-   
+    def set_cookie(self):
+        f = open(self.fichier, 'w')
+        f.write('1')
+        f.close()
+        
 
-    def traitement(self, req):
-        return self.__res.voir_arrets(req), req
+    @property
+    def read_cookie(self):
+        f = open(self.fichier, 'r')
+        res = f.read()
+        f.close()
+        return res
+
+
+    def unset_cookie(self):
+        f = open(self.fichier, 'w')
+        f.write('0')
+        f.close()
+
+    
+
+if __name__ =="__main__":
+
+    cl = Cookie()
+
+    cl.unset_cookie()
+    cl.set_cookie()
+    print(cl.read_cookie)
+
+
+
+
 

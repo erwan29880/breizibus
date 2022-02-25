@@ -10,9 +10,15 @@
 <body>
     <div id=""containeur>
 
-        <H1>Page d'administration</H1>
+        <H1><a href="/">Page d'administration</a></H1>
 
         <div class="article">
+
+        
+
+{% if varGlobale ==1 %}
+
+        <p><a href="/enregistrement">Ajouter un nouvel administrateur</a></p>
 
             {% if var==1 %}
 
@@ -56,6 +62,14 @@
             {% if var==3 %}
 
                 <p>La suppression a bien été effectée !</p>
+
+
+            {% endif %}
+
+
+            {% if var==4 %}
+
+                <p>La modification a bien été effectée !</p>
 
 
             {% endif %}
@@ -131,9 +145,9 @@
                     <select name="supp" >
 
                         {% for i in suppression %}
-                        <option value="{{i[0]}}">numéro : {{i[1]}}</option>
-
+                            <option value="{{i[0]}}">numéro : {{i[1]}}</option>
                         {% endfor %}
+
 
                     </select>
 
@@ -143,6 +157,96 @@
                 </fieldset>
 
             </form>
+
+
+
+
+
+            <p><b>Mettre à jour des données pour un bus :</b></p>
+
+            <form action="/admin" method="post">
+            
+                <fieldset>
+
+                    <select name="supp" >
+
+                        {% for i in suppression %}
+                        <option value="{{i[0]}}">numéro : {{i[1]}}</option>
+                        {% endfor %}
+
+                    </select>
+                            
+
+                    <select name="ligneAdmin" >
+
+                        {% for i in aff %}
+                            <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+                        {% endfor %}
+
+                    </select>
+
+
+                    <p>Immatriculation :</p>
+                            <div class="mep2" ><input type=text name="immat"></div>
+
+                    <p>Nombre de places :</p>
+                    <div class="mep2" ><input type="number" name="places" min="5" max="100"></div>
+
+                    <br>
+
+                    <input type="hidden" name="verification" value="5">   
+                    <button id='submit'>Valider</button>
+
+                </fieldset>
+
+            </form>
+
+
+
+            <p><b>Se déconnecter :</b></p>
+
+            <form action="/admin" method="post">
+            
+                <fieldset>
+
+                    <input type="hidden" name="verification" value="200">   
+                    <button id='submit'>Valider</button>
+
+                </fieldset>
+
+            </form>
+
+
+{% endif %}
+
+{% if varGlobale == 0 %}
+
+
+    <form action="/admin" method="post">
+                
+        <fieldset>
+
+        <p>Connexion : </p>
+
+        <p>pseudo :</p>
+        <p><input type="text" name='pseudo'></p>
+
+
+        <p>Mot de passe :</p>
+        <p><input type="password" name="password"></p>
+
+        <input type="hidden" name="verification" value="50">   
+
+        <button id='submit'>Valider</button>
+        </fieldset>
+
+    </form>
+
+
+{% endif %}
+
+
+
 
 
         </div>
