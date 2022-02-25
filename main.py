@@ -33,24 +33,44 @@ def home():
 
 
 
+
+
+
 @app.route('/admin', methods = ['GET','POST'])
 def admin():
 
     affichage_initial = Resultat().formulaire()
-
+    retour_arret=None
+    retour_bus=None
+    texte = None
     var = 0
     
+
     if request.form:
         if request.form['verification']=='2':
             res=request.form
 
             # enregsitrer une nouvelle entrée
             Administration().commit(res['immat'],res['places'], res['adminLigne'])
-
             var = 1
 
 
-    return render_template('admin.html',aff=affichage_initial, var=var)
+        if request.form['verification']=='3':
+            
+            res = request.form['ligneAdmin']
+                    
+            retour_arret = Resultat().traitement(res)[0]
+            texte = Resultat().traitement(res)[1] 
+            
+            retour_bus = Administration().voir_bus(res)
+                
+            var = 2
+
+
+        
+
+
+    return render_template('admin.html',aff=affichage_initial, var=var, res1=retour_arret, texte=texte, bus=retour_bus)
 
 
 

@@ -32,7 +32,39 @@ class Administration(Connexion):
 
 
         self.fermer()
-        
+
+
+
+
+    def voir_arrets(self, ligne):
+        """ligne est la réponse issue du formulaire, soit le nom de la ligne de bus, par exemple Bleu, Vert etc"""
+
+        self.ouvrir()
+       
+        sql = f"SELECT arrets.nom FROM arrets JOIN arrets_lignes ON arrets.id_arret=arrets_lignes.id_arret JOIN lignes ON arrets_lignes.id_ligne=lignes.id_ligne WHERE lignes.nom='{ligne}'"
+        self.cursor.execute(sql)
+        res = [x for x in self.cursor]
+
+        self.fermer()
+        return res
+
+
+    
+
+
+    def voir_bus(self, ligne):
+
+        self.ouvrir()
+       
+        sql = f"SELECT numero FROM bus JOIN lignes ON lignes.id_ligne=bus.id_ligne WHERE lignes.nom='{ligne}';"
+        self.cursor.execute(sql)
+        res = [x for x in self.cursor]
+
+        self.fermer()
+        return res
+
+
+
 
 if __name__ == "__main__":
 
