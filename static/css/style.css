@@ -38,3 +38,10 @@ button {
   button:hover{
     background-color: black; /* Green */
   }
+
+
+  .champs{
+
+    padding-bottom: 15px;
+
+  }

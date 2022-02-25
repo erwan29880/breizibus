@@ -13,14 +13,41 @@
 
         <div class="article">
 
+            {% if var==1 %}
 
+                <p>Votre enregistrement est bien pris en compte !</p>
+
+                <p>{{var1}}</p>
+                <p>{{var2}}</p>
+                <p>{{var3}}</p>
+
+            {% endif %}
+
+
+
+            <p>Ajouter un nouveau bus :</p>
             <form action="/admin" method="post">
                 <div id="mef">
                     <div class="champs">
 
-                        <div class="mep" ><label for="arret"></label></div>
-                        <div class="mep2" ><input type=text name="arret"></div>
-                    
+                                           
+                        <p>Immatriculation :</p>
+                        <div class="mep2" ><input type=text name="immat"></div>
+
+                        <p>Nombre de places :</p>
+                        <input type="number" name="places" min="5" max="100">
+
+                        <p>Quelle ligne :</p>
+                            <select name="adminLigne" >
+
+                                {% for i in aff %}
+                                <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+            
+                                {% endfor %}
+            
+                            </select>
+
+
                     </div>
 
                     <input type="hidden" name="verification" value="2">    

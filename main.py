@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from connexion import Connexion
 from requete import Requete
 from traitement import Resultat
-
+from admin import Administration
 
 app = Flask(__name__)
 
@@ -36,7 +36,21 @@ def home():
 @app.route('/admin', methods = ['GET','POST'])
 def admin():
 
-    return render_template('admin.html')
+    affichage_initial = Resultat().formulaire()
+
+    var = 0
+    
+    if request.form:
+        if request.form['verification']=='2':
+            res=request.form
+
+            # enregsitrer une nouvelle entrée
+            Administration().commit(res['immat'],res['places'], res['adminLigne'])
+
+            var = 1
+
+
+    return render_template('admin.html',aff=affichage_initial, var=var)
 
 
 
