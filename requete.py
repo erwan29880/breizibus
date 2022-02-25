@@ -33,6 +33,6 @@ class Requete(Connexion):
         res = [x for x in self.cursor]
 
         self.fermer()
-        return res
+        return res, ligne
 
 

@@ -17,14 +17,14 @@ def home():
     retour_req=None
     texte = None
 
-    affichage_initial = Resultat().formulaire()
+    affichage_initial = Requete().requete_ligne()
 
     # récupération des données du formulaire
     if request.form:
         res = request.form['lignes']
         
-        retour_req = Resultat().traitement(res)[0]
-        texte = Resultat().traitement(res)[1] 
+        retour_req = Requete().voir_arrets(res)[0]
+        texte = Requete().voir_arrets(res)[1] 
         
                     
         affichage=1
@@ -39,7 +39,8 @@ def home():
 @app.route('/admin', methods = ['GET','POST'])
 def admin():
 
-    affichage_initial = Resultat().formulaire()
+    affichage_initial = Requete().requete_ligne()
+    affichage_suppression = Administration().voir_bus2()
     retour_arret=None
     retour_bus=None
     texte = None
@@ -58,19 +59,22 @@ def admin():
         if request.form['verification']=='3':
             
             res = request.form['ligneAdmin']
-                    
-            retour_arret = Resultat().traitement(res)[0]
-            texte = Resultat().traitement(res)[1] 
-            
+            retour_arret = Requete().voir_arrets(res)[0]
+            texte = Requete().voir_arrets(res)[1]           
             retour_bus = Administration().voir_bus(res)
-                
             var = 2
 
 
+
+        if request.form['verification']=='4':
+            
+            res = request.form['supp']
+            Administration().supprimer_bus(res)
+            var = 3
         
 
 
-    return render_template('admin.html',aff=affichage_initial, var=var, res1=retour_arret, texte=texte, bus=retour_bus)
+    return render_template('admin.html',aff=affichage_initial, var=var, res1=retour_arret, texte=texte, bus=retour_bus, suppression=affichage_suppression )
 
 
 

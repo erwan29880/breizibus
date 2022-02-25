@@ -54,6 +54,8 @@ class Administration(Connexion):
 
     def voir_bus(self, ligne):
 
+        "voir les bus par ligne"
+
         self.ouvrir()
        
         sql = f"SELECT numero FROM bus JOIN lignes ON lignes.id_ligne=bus.id_ligne WHERE lignes.nom='{ligne}';"
@@ -65,9 +67,39 @@ class Administration(Connexion):
 
 
 
+    def voir_bus2(self):
+    
+        "voir les bus"
+
+        self.ouvrir()
+       
+        self.cursor.execute("SELECT id_bus, numero FROM bus;")
+        res = [x for x in self.cursor]
+
+        self.fermer()
+        return res
+
+
+
+    def supprimer_bus(self, bus):
+
+        self.ouvrir()
+
+        bus = int(bus)
+
+        sql = f"DELETE FROM bus WHERE id_bus={bus};"
+        
+        self.cursor.execute(sql)
+        self.conn.commit()
+        self.fermer()
+        
+
+
+
 
 if __name__ == "__main__":
 
     a=Administration()
 
     a.commit('gtref', 11, 'Bleu')
+    # a.supprimer_bus('12')
