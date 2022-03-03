@@ -2,7 +2,7 @@
 
 #### Le projet est décrit dans le cahier des charges.
 
-#### Le projet est écrit en python, html et css sous forme de serveur web (Flask)
+#### Le projet est écrit en python, html et css sous forme de serveur web (Flask).
 
 #### Il faut lancer le serveur avec le fichier main.py.
 
@@ -13,7 +13,7 @@
   - génére un fichier texte (façon cookie) pour la gestion administrateur/utilisateur
 - connexion.py :
   - connexion à la base de données Breizhibus
-- connexion.admin.py : 
+- connexionAdmin.py : 
   - connexion à la base de données Users
 - requete.py :
   - classe héritée de la classe connexion, gère les requêtes
