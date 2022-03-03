@@ -1,68 +1,126 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Document</title>
-</head>
-<body>
-    <div id=""containeur>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Breizhibus- SB Admin</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+       
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles2.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
-        <div class="article">
-
-            <h1><a href="/admin">Breizibus</a></h1>
-
-
-            <!-- affichage des lignes de bus disponibles et les afficher dans un formulaire-->
-            <p>Sélectionnez une ligne de bus :</p>
-
-            <form action="/" method="post">
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="{{ url_for('admin') }}">Breizhibus</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             
-                <select name="lignes" >
+            <!-- Navbar-->
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <a class="nav-link" href="{{ url_for('home') }}">acceuil</a>
+                                <a class="nav-link" href="{{ url_for('admin') }}">pages administrateurs</a>
 
-                    {% for i in aff %}
-                    <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Pages
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="{{ url_for('connexion') }}">Login/logout</a>
 
-                    {% endfor %}
+                                        </nav>
+                                    </div>
+                                    
+                                </nav>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
 
-                </select>
+                    <div class="formulairePageAccueil">
+                        <p>Sélectionnez une ligne de bus :</p>
 
-                <button id='submit'>Valider</button>
-            </form>
+                        <form action="/" method="post">
+                        
+                            <select name="lignes" >
 
-        
+                                {% for i in aff %}
+                                <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
 
+                                {% endfor %}
 
+                            </select>
+                            <button class="btn btn-success" id="submit">Valider</button>
+                            <!-- <button id='submit'>Valider</button> -->
+                        </form>
 
+                    </div>
 
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    {% if verif==1  %}
 
-        <!-- affichage des résultats -->
+                                    <P>Voici les arrêts disponibles pour la ligne : {{texte}}</P>
+                                    <thead>
+                                        <tr>
+                                            <th>nom de l'arrêt</th>
+                                            <th>adresse</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in res1 %}
+                                        <tr >
+                                            <td>{{i[0]}}</td>
+                                            <td>{{i[1]}}</td>           
+                                        </tr>
+                                        {% endfor %}
 
-        {% if verif==1  %}
-
-            <P>Voici les arrêts disponibles pour la ligne : {{texte}}</P>
-            
-            <ul>
-                {% for i in res1 %}
-                                   
-                        <li>{{i[0]}} : {{i[1]}}</li>           
-
-                {% endfor %}
-            </ul>
-
-        {% endif %}
-
-
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                            </div>
+                    </main>
+                </div>
+            </div>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Breizhibus</div>
+                            
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
-        
-        
-
-    </div>
-    
-
-
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="static/js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="static/assets/demo/chart-area-demo.js"></script>
+        <script src="static/assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="static/js/datatables-simple-demo.js"></script>
+    </body>
 </html>

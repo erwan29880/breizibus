@@ -1,261 +1,284 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Document</title>
-</head>
-<body>
-    <div id=""containeur>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Breizhibus- SB Admin</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <!--<link href="{{ url_for('static', filename='css/styles2.css') }}" rel="stylesheet" />-->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles2.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 
-        <H1><a href="/">Page d'administration</a></H1>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
-        <div class="article">
-
-        
-
-{% if varGlobale ==1 %}
-
-        <p><a href="/enregistrement">Ajouter un nouvel administrateur</a></p>
-
-            {% if var==1 %}
-
-                <p>Votre enregistrement est bien pris en compte !</p>
-
-                <p>{{var1}}</p>
-                <p>{{var2}}</p>
-                <p>{{var3}}</p>
-
-            {% endif %}
-
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="{{ url_for('admin') }}">Breizhibus</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             
+            <!-- Navbar-->
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <a class="nav-link" href="{{ url_for('home') }}">acceuil</a>
+                            <a class="nav-link" href="{{ url_for('admin') }}">ajout et modifications de bus</a>
+                            
+                            <a class="nav-link" href="{{ url_for('enregistrement') }}">création comptes administrateurs</a>    
+                                                
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Pages
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="{{ url_for('connexion') }}">Login/logout</a>
 
-            {% if var == 2 %}
+                                        </nav>
+                                    </div>
+                                    
+                                </nav>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
 
-            <P>Voici les arrêts disponibles pour la ligne : {{texte}}</P>
-            
-            <ul>
-                {% for i in res1 %}
+
+                    <div class="formulairePageAccueil">
+
+
+                    {% if varGlobale ==1 %}
+
+                               
+                                    {% if var==1 %}
+
+                                        <p>Votre enregistrement est bien pris en compte !</p>
+
+                                        <p>{{var1}}</p>
+                                        <p>{{var2}}</p>
+                                        <p>{{var3}}</p>
+
+                                        <br><br><hr>
+                                    {% endif %}
+
+                                    
+
+                                    {% if var == 2 %}
+
+                                    <P>Voici les arrêts disponibles pour la ligne : {{texte}}</P>
+                                    
+                                    <ul>
+                                        {% for i in res1 %}
+                                                           
+                                                <li>{{i[0]}} : {{i[1]}}</li>           
+
+                                        {% endfor %}
+                                    </ul>
+
+
+                                    <P>Voici les bus disponibles pour la ligne : {{texte}}</P>
+                                    <ul>
+                                        {% for i in bus %}
+                                                           
+                                                <li>{{i[0]}}</li>           
+
+                                        {% endfor %}
+
+                                    </ul>
+                                    <br><br><hr>
+
+
+                                    {% endif %}
                                    
-                        <li>{{i[0]}} : {{i[1]}}</li>           
 
-                {% endfor %}
-            </ul>
+                                    {% if var==3 %}
 
+                                        <p>La suppression a bien été effectée !</p>
+                                        <br><br><hr>
 
-            <P>Voici les bus disponibles pour la ligne : {{texte}}</P>
-            <ul>
-                {% for i in bus %}
-                                   
-                        <li>{{i[0]}}</li>           
-
-                {% endfor %}
-            </ul>
+                                    {% endif %}
 
 
+                                    {% if var==4 %}
 
-            {% endif %}
-           
+                                        <p>La modification a bien été effectée !</p>
+                                        <br><br><hr>
 
-            {% if var==3 %}
+                                    {% endif %}
 
-                <p>La suppression a bien été effectée !</p>
+                                    <p><b>Ajouter un nouveau bus :</b></p>
+                                    <form action="/admin" method="post">
+                                        <div id="mef">
+                                            <div class="champs">
+                                           
+                                                <fieldset>
+                                                    
+                                                
+                                                    
+                                                    <p>Immatriculation :</p>
+                                                    <p><div class="mep2" ><input type=text pattern="[A-Z]{2}[0-9]{2}[A-Z]{2}" name="immat" placeholder="AA99AA"></div></p>
+
+                                                    <p>Nombre de places :</p>
+                                                    <p></p><input type="number" name="places" min="5" max="100"></p>
+
+                                                    <p>Quelle ligne :</p>
+                                                        <select name="adminLigne" >
+
+                                                            {% for i in aff %}
+                                                            <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+                                        
+                                                            {% endfor %}
+                                        
+                                                        </select>
+
+                                                    <input type="hidden" name="verification" value="2">    
+                                                    <button class="btn btn-success" id="submit">Valider</button>
+                                                </fieldset>
+                                            </div>           
+                                    
+                                    </form>
+
+                                    <br><br><hr>
+                                
+                                    <p><b>Afficher les arrêts par ligne :</b></p>
+
+                                    <form action="/admin" method="post">
+                                    
+                                        <fieldset>
+
+                                            <select name="ligneAdmin" >
+
+                                                {% for i in aff %}
+                                                <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+
+                                                {% endfor %}
+
+                                            </select>
+
+                                            <input type="hidden" name="verification" value="3">   
+                                            <button class="btn btn-success" id="submit">Valider</button>
+
+                                        </fieldset>
+
+                                    </form>
+
+                                    <br><br><hr>
+
+                                    <p><b>Supprimer un bus :</b></p>
+
+                                    <form action="/admin" method="post">
+                                    
+                                        <fieldset>
+
+                                            <select name="supp" >
+
+                                                {% for i in suppression %}
+                                                    <option value="{{i[0]}}">numéro : {{i[1]}}</option>
+                                                {% endfor %}
 
 
-            {% endif %}
+                                            </select>
+
+                                            <input type="hidden" name="verification" value="4">   
+                                            <button class="btn btn-success" id="submit">Valider</button>
+                                        </fieldset>
+
+                                    </form>
 
 
-            {% if var==4 %}
+                                    <br><br><hr>
 
-                <p>La modification a bien été effectée !</p>
+                                    <p><b>Mettre à jour des données pour un bus :</b></p>
+
+                                    <form action="/admin" method="post">
+                                    
+                                        <fieldset>
+
+                                            <select name="supp" >
+
+                                                {% for i in suppression %}
+                                                <option value="{{i[0]}}">numéro : {{i[1]}}</option>
+                                                {% endfor %}
+
+                                            </select>
+                                                    
+
+                                            <select name="ligneAdmin" >
+
+                                                {% for i in aff %}
+                                                    <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+                                                {% endfor %}
+
+                                            </select>
 
 
-            {% endif %}
+                                            <p>Immatriculation :</p>
+                                            <p><div class="mep2" ><input type=text pattern="[A-Z]{2}[0-9]{2}[A-Z]{2}" name="immat" placeholder="AA99AA"></div></p>
+
+                                            <p>Nombre de places :</p>
+                                            <p><div class="mep2" ><input type="number" name="places" min="5" max="100"></div></p>
+
+                                            
+
+                                            <input type="hidden" name="verification" value="5">   
+                                            <button class="btn btn-success" id="submit">Valider</button>
+
+                                        </fieldset>
+
+                                    </form>
+
+
+                        {% endif %}
 
 
 
 
-            <p><b>Ajouter un nouveau bus :</b></p>
-            <form action="/admin" method="post">
-                <div id="mef">
-                    <div class="champs">
-                   
-                        <fieldset>
-                            
-                            <p>Ajouter une nouveau Bus :</p>
-                            
-                            <p>Immatriculation :</p>
-                            <div class="mep2" ><input type=text pattern="[A-Z]{2}[0-9]{2}[A-Z]{2}" name="immat" placeholder="AA99AA"></div>
+                        {% if varGlobale ==0 %}
 
-                            <p>Nombre de places :</p>
-                            <input type="number" name="places" min="5" max="100">
+                                <center><h2>Vous n'avez pas l'autorisation pour accéder à cette page<br><a href="connexion">veuillez vous identifier !</a> </h2></center>
 
-                            <p>Quelle ligne :</p>
-                                <select name="adminLigne" >
 
-                                    {% for i in aff %}
-                                    <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
+                        {% endif %}
+
+
+
+
+
+
+
+                    </div>   <!-- fin div formulairePageAccueil>     -->
+
+                </main>
+                </div>
+
                 
-                                    {% endfor %}
-                
-                                </select>
-
-                            <input type="hidden" name="verification" value="2">    
-                            <button id='submit'>Valider</button>
-
-                        </fieldset>
-                    </div>           
-            
-            </form>
-
-
-            <p><b>Afficher les arrêts par ligne :</b></p>
-
-            <form action="/admin" method="post">
-            
-                <fieldset>
-
-                    <select name="ligneAdmin" >
-
-                        {% for i in aff %}
-                        <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
-
-                        {% endfor %}
-
-                    </select>
-
-                    <input type="hidden" name="verification" value="3">   
-                    <button id='submit'>Valider</button>
-
-                </fieldset>
-
-            </form>
-
-
-
-
-            <p><b>Supprimer un bus :</b></p>
-
-            <form action="/admin" method="post">
-            
-                <fieldset>
-
-                    <select name="supp" >
-
-                        {% for i in suppression %}
-                            <option value="{{i[0]}}">numéro : {{i[1]}}</option>
-                        {% endfor %}
-
-
-                    </select>
-
-                    <input type="hidden" name="verification" value="4">   
-                    <button id='submit'>Valider</button>
-
-                </fieldset>
-
-            </form>
-
-
-
-
-
-            <p><b>Mettre à jour des données pour un bus :</b></p>
-
-            <form action="/admin" method="post">
-            
-                <fieldset>
-
-                    <select name="supp" >
-
-                        {% for i in suppression %}
-                        <option value="{{i[0]}}">numéro : {{i[1]}}</option>
-                        {% endfor %}
-
-                    </select>
-                            
-
-                    <select name="ligneAdmin" >
-
-                        {% for i in aff %}
-                            <option value="{{i[0]}}">Ligne : {{i[0]}}</option>
-                        {% endfor %}
-
-                    </select>
-
-
-                    <p>Immatriculation :</p>
-                            <div class="mep2" ><input type=text pattern="[A-Z]{2}[0-9]{2}[A-Z]{2}" name="immat" placeholder="AA99AA"></div>
-
-                    <p>Nombre de places :</p>
-                    <div class="mep2" ><input type="number" name="places" min="5" max="100"></div>
-
-                    <br>
-
-                    <input type="hidden" name="verification" value="5">   
-                    <button id='submit'>Valider</button>
-
-                </fieldset>
-
-            </form>
-
-
-
-            <p><b>Se déconnecter :</b></p>
-
-            <form action="/admin" method="post">
-            
-                <fieldset>
-
-                    <input type="hidden" name="verification" value="200">   
-                    <button id='submit'>Valider</button>
-
-                </fieldset>
-
-            </form>
-
-
-{% endif %}
-
-{% if varGlobale == 0 %}
-
-
-    <form action="/admin" method="post">
-                
-        <fieldset>
-
-        <p>Connexion : </p>
-
-        <p>pseudo :</p>
-        <p><input type="text" name='pseudo'></p>
-
-
-        <p>Mot de passe :</p>
-        <p><input type="password" name="password"></p>
-
-        <input type="hidden" name="verification" value="50">   
-
-        <button id='submit'>Valider</button>
-        </fieldset>
-
-    </form>
-
-
-{% endif %}
-
-
-
-
-
+            </div>
         </div>
-        
-        
-
-    </div>
-    
-
-
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="static/js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="static/assets/demo/chart-area-demo.js"></script>
+        <script src="static/assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="static/js/datatables-simple-demo.js"></script>
+    </body>
 </html>

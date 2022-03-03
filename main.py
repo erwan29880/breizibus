@@ -19,12 +19,14 @@ def home():
     retour_req=None
     texte = None
 
+    # requete pour afficher les lignes dans un select
     affichage_initial = Requete().requete_ligne()
 
     # récupération des données du formulaire
     if request.form:
         res = request.form['lignes']
         
+        # nom de l'arret de bus, adresse de l'arret de bus
         retour_req = Requete().voir_arrets(res)[0]
         texte = Requete().voir_arrets(res)[1] 
         
@@ -38,25 +40,17 @@ def home():
 @app.route('/admin', methods = ['GET','POST'])
 def admin():
 
+    # simulacre de cookie pour le login admin
     cook = Cookie()
+    # crytpage/décryptage de mdp pour entrée en bdd
     utilisateur = Cryptage()
 
-
-    if request.form:
-        if request.form['verification']=='50':
-            res = request.form
-            if Cryptage().verifier_utilisateur(res['pseudo'], res['password']) == True:
-                cook.set_cookie()
-            
-        if request.form['verification']=='200':
-                cook.unset_cookie()
-
-
+    # affichage de la page admin
     if cook.read_cookie[0] == '1':
 
         varGlobale = 1
-        affichage_initial = Requete().requete_ligne()
-        affichage_suppression = Administration().voir_bus2()
+        affichage_initial = Requete().requete_ligne()           # pour les select de lignes dans les formulaires
+        affichage_suppression = Administration().voir_bus2()    # pour formulaire suppression bus
         retour_arret=None
         retour_bus=None
         texte = None
@@ -66,6 +60,7 @@ def admin():
 
         if request.form:
 
+            # ajouter un bus en bdd
             if request.form['verification']=='2':
                 res=request.form
 
@@ -74,6 +69,7 @@ def admin():
                 var = 1
 
 
+            # voir arrêts et bus
             if request.form['verification']=='3':
                 
                 res = request.form['ligneAdmin']
@@ -83,6 +79,7 @@ def admin():
                 var = 2
 
 
+            # supprimer un bus
             if request.form['verification']=='4':
                 
                 res = request.form['supp']
@@ -90,6 +87,7 @@ def admin():
                 var = 3
             
 
+            # modifier des données pour un bus
             if request.form['verification']=='5':
                 
                 res = request.form
@@ -101,16 +99,14 @@ def admin():
 
         return render_template('admin.html', varGlobale=varGlobale,aff=affichage_initial, var=var, res1=retour_arret, texte=texte, bus=retour_bus, suppression=affichage_suppression )
 
+        # affichage d'un message d'erreur
     else:
         varGlobale=0
         return render_template('admin.html', varGlobale=varGlobale)
 
 
 
-@app.route('/connexion', methods = ['GET','POST'])
-def connexion():
 
-    return render_template('connexion.html')
 
 
 
@@ -118,6 +114,7 @@ def connexion():
 def enregistrement():
     var = 0
 
+    # ajouter un administrateur : vérifier si le pseudo existe déjà, crypter le mot de passe
     if request.form:
         if request.form['verification']=='11':
             res = request.form
@@ -132,6 +129,31 @@ def enregistrement():
 
 
 
+
+@app.route('/connexion', methods = ['GET','POST'])
+def connexion():
+
+    # simulacre de cookie pour le login admin
+    cook = Cookie()
+    # crytpage/décryptage de mdp pour entrée en bdd
+    utilisateur = Cryptage()
+
+    if request.form:
+
+        # set cookie
+        if request.form['verification']=='10':
+            res = request.form
+            if Cryptage().verifier_utilisateur(res['pseudo'], res['password']) == True:
+                cook.set_cookie()
+
+        # unset cookie
+        if request.form['verification']=='200':
+                cook.unset_cookie()
+
+    if cook.read_cookie[0] == '1':
+        return render_template('connexion.html', var=1)
+    else:
+        return render_template('connexion.html', var=0)
 
 
 if __name__ == "__main__":
